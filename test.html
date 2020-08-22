@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="../examples/css/style.css" />
+    <link rel="stylesheet" href="../css/editormd.css" />
+    <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon" />
+
+    <script src="../examples/js/jquery.min.js"></script>
+    <script src="../lib/marked.min.js"></script>
+    <script src="../lib/prettify.min.js"></script>
+    <script src="../lib/raphael.min.js"></script>
+    <script src="../lib/underscore.min.js"></script>
+    <script src="../lib/sequence-diagram.min.js"></script>
+    <script src="../lib/flowchart.min.js"></script>
+    <script src="../lib/jquery.flowchart.min.js"></script>
+    <script src="../editormd.js"></script>
+</head>
+<body>
+
+<div id="layout">
+    <header>
+        <h1>Simple example</h1>
+    </header>
+    <div id="test-editormd">
+                <textarea id="demo1" style="display:none;"></textarea>
+    </div>
+</div>
+
+<!--输入需要转换的markdown文件结束-->
+
+<!--点击该按钮进行转换-->
+<button onclick="mdtos()" type="button" id="bus">点击转Html</button>
+
+
+<!--在该div中展示,如有初始化的数据可以放在textarea中-->
+<div id="testEditorMdview">
+    <textarea id="appendTest" style="display:none;"></textarea>
+</div>
+
+
+
+</body>
+
+
+<!--js开始-->
+<script type="text/javascript">
+    var testEditor;
+    $(function () {
+        testEditor = editormd("test-editormd", {
+            width   : "90%",
+            height  : 640,
+            theme  : 'dark',
+            saveHTMLToTextarea :true,
+            previewTheme: "dark",//预览主题
+            editorTheme: "pastel-on-dark",//编辑主题
+            syncScrolling : "single",
+            path    : "../lib/",
+            emoji: true,
+            saveHTMLToTextarea: true,
+            taskList:true,
+            tex: true,               // 默认不解析
+            flowChart:true,         // 默认不解析
+            sequenceDiagram:true,  // 默认不解析
+        });
+
+
+        // $("#bus").click(function () {
+        //     mdto();
+        // })
+    });
+    var test;
+    function mdtos() {
+        console.log("dada")
+        $("#testEditorMdview").html('<textarea id="appendTest" style="display:none;"></textarea>');
+        var content=$("#demo1").val();//获取需要转换的内容
+        $("#appendTest").val(content);//将需要转换的内容加到转换后展示容器的textarea隐藏标签中
+        //转换开始,第一个参数是上面的div的id
+        test=editormd.markdownToHTML("testEditorMdview", {
+            htmlDecode: "style,script,iframe", //可以过滤标签解码
+            emoji: true,
+            saveHTMLToTextarea: true,
+            taskList:true,
+            tex: true,               // 默认不解析
+            flowChart:true,         // 默认不解析
+            sequenceDiagram:true,  // 默认不解析
+        });
+        console .log(testEditor.getHTML().toString());
+    }
+</script>
+</html>
